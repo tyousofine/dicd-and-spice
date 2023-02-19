@@ -1,0 +1,13 @@
+@import "./../../styles/variables.scss";
+
+.searchbar {
+  form {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  input {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,42 @@
+@import "./../../styles/variables.scss";
+
+.create {
+  color: #555;
+  max-width: 480px;
+  margin: 60px auto;
+
+  label {
+    span {
+      display: block;
+      margin: 30px 0 10px;
+    }
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 0.8em;
+  }
+
+  .btn {
+    display: block;
+    width: 100px;
+    font-size: 1em;
+    color: #fff;
+    padding: 8px 20px;
+    border: 0;
+    border-radius: 4px;
+    background-color: $nav-background;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 20px auto;
+  }
+
+  .ingredients {
+    display: flex;
+    align-items: center;
+
+    button {
+      margin: 0 0 0 10px;
+    }
+  }
+}
