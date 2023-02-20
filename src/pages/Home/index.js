@@ -6,6 +6,7 @@ import './styles.scss'
 
 //components
 import RecipeList from '../../components/RecipeList';
+import ThemeSelector from '../../components/ThemeSelector';
 
 
 
@@ -14,6 +15,7 @@ export default function Home() {
 
     return (
         <div className='home'>
+
             {error && <div className='error'>{error}</div>}
             {isPending && <p className='pending'>Loading...</p>}
             {data && <RecipeList recipes={data} />}

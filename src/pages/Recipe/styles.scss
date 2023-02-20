@@ -32,4 +32,14 @@
     text-align: left;
     line-height: 1.5em;
   }
+
+  &.dark {
+    background: #555;
+    color: white;
+
+    .page-title,
+    li {
+      color: white;
+    }
+  }
 }

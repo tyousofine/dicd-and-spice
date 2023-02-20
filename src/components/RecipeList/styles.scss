@@ -48,5 +48,15 @@
       width: 120px;
       border-radius: 2px;
     }
+
+    &.dark {
+      background: #555;
+
+      p,
+      h3,
+      div {
+        color: white;
+      }
+    }
   }
 }

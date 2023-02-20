@@ -1,5 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetch';
+import { useColor } from '../../hooks/useColor';
+
 
 // styles
 import './styles.scss'
@@ -12,9 +14,10 @@ export default function Recipe() {
     const url = 'http://localhost:3000/recipes/' + id;
 
     const { error, isPending, data: recipe } = useFetch(url);
+    const { mode } = useColor();
 
     return (
-        <div className='recipe'>
+        <div className={`recipe ${mode} `}>
             {error && <p className='error'>{error}</p>}
             {isPending && <p className='loading'>Loading...</p>}
             {recipe && (<>

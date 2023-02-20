@@ -7,15 +7,21 @@ import Create from './pages/Create';
 import Search from './pages/Search';
 import Recipe from './pages/Recipe';
 import Blog from './pages/Blog';
+import { useColor } from './hooks/useColor';
 // styles
-import './App.css';
+import './App.scss';
+import ThemeSelector from './components/ThemeSelector';
 
 function App() {
+
+  const { mode } = useColor();
   return (
-    <div className="App">
+
+
+    <div className={`App ${mode}`}>
       <BrowserRouter>
         <Navbar />
-
+        <ThemeSelector />
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/create' element={<Create />} />
