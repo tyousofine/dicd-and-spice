@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useColor } from './../../hooks/useColor';
+import { VscTrash } from "react-icons/vsc";
+import { projectFirestore } from '../../firebase/config';
 
 // styles
 import './styles.scss';
@@ -9,6 +11,10 @@ import './styles.scss';
 export default function RecipeList({ recipes }) {
 
     const { mode } = useColor();
+
+    const handleClick = (id) => {
+        projectFirestore.collection('recipes').doc(id).delete()
+    }
 
     return (
         <>
@@ -21,7 +27,14 @@ export default function RecipeList({ recipes }) {
                         <h3>{recipe.title}</h3>
                         <p>{recipe.cookingTime} to make.</p>
                         <div>{recipe.method.substring(0, 100)}...</div>
-                        <Link to={`/recipes/${recipe.id}`}>Cook This</Link>
+                        <div className="btn-container">
+                            <Link to={`/recipes/${recipe.id}`}>Cook This</Link>
+                            <button
+                                className='delete-btn'
+                                onClick={() => handleClick(recipe.id)}
+                            ><p><VscTrash size={25} /></p>
+                            </button>
+                        </div>
                     </div>
                 ))}
 

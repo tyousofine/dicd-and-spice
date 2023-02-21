@@ -5,16 +5,35 @@ import { useColor } from '../../hooks/useColor';
 
 // styles
 import './styles.scss'
+import { projectFirestore } from '../../firebase/config';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Recipe() {
 
-    const { id } = useParams();
-    const url = 'http://localhost:3000/recipes/' + id;
+    const [recipe, setRecipe] = useState('');
+    const [isPending, setIsPending] = useState(false);
+    const [error, setError] = useState('');
 
-    const { error, isPending, data: recipe } = useFetch(url);
+    const { id } = useParams();
     const { mode } = useColor();
+
+    useEffect(() => {
+        setIsPending(true);
+        projectFirestore.collection('recipes').doc(id).get().then((doc) => {
+            if (doc.exists) {
+                setIsPending(false);
+                setRecipe(doc.data());
+            } else {
+                setIsPending(false);
+                setError("Could not find that recipe")
+            }
+        })
+    }, [id])
+
+
+
+
 
     return (
         <div className={`recipe ${mode} `}>
