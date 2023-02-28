@@ -1,44 +1,40 @@
 
-import { projectFirestore } from './../../firebase/config';
 import React, { useEffect, useState } from 'react'
-
+// use this if you are not gonna use the hook
+import { db } from './../../firebase/config';
+import { collection, onSnapshot } from 'firebase/firestore'
 // styles
 import './styles.scss'
 
 //components
 import RecipeList from '../../components/RecipeList';
+import { useCollection } from '../../hooks/useCollection';
 
 
 
 export default function Home() {
-    const [data, setData] = useState('');
+    // const [data, setData] = useState('');
+    // use use Collection hook like this: 
+    const { documents: data } = useCollection('recipes')
     const [isPending, setIsPending] = useState(false);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        setIsPending(true);
+    // or do something like this:
+    // useEffect(() => {
+    //     setIsPending(true);
 
-        const unsub = projectFirestore.collection('recipes').onSnapshot((snapshot) => {
+    //     const ref = collection(db, 'recipes');
+    //     const unsub = onSnapshot(ref, (snapshot) => {
+    //         let results = [];
+    //         snapshot.docs.forEach((doc => {
+    //             results.push({ id: doc.id, ...doc.data() })
 
-            if (snapshot.empty) {
-                setError("No recipes to load")
-                setIsPending(false)
-
-            } else {
-                let results = [];
-                snapshot.docs.forEach(doc => {
-                    results.push({ id: doc.id, ...doc.data() })
-                })
-                setData(results);
-                setIsPending(false);
-            }
-        }, (err) => {
-            setError(err.message);
-            setIsPending(false)
-        })
-
-
-    }, [])
+    //         }))
+    //         setData(results)
+    //         setIsPending(false);
+    //     })
+    //     return () => unsub()
+    // }, [])
 
 
     return (

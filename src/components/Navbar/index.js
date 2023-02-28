@@ -11,7 +11,7 @@ import logo from './../../assets/images/logoGreen.jpg'
 
 export default function Navbar() {
 
-    const { color, changeColor } = useColor()
+    const { color } = useColor()
 
     // const randomizer = function getRandomColor() {
     //     var letters = '0123456789ABCDEF';

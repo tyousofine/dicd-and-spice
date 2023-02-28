@@ -5,7 +5,8 @@ import { useColor } from '../../hooks/useColor';
 
 // styles
 import './styles.scss'
-import { projectFirestore } from '../../firebase/config';
+import { db } from '../../firebase/config';
+import { collection, onSnapshot } from 'firebase/firestore'
 
 import React, { useEffect, useState } from 'react'
 
@@ -18,24 +19,30 @@ export default function Recipe() {
     const { id } = useParams();
     const { mode } = useColor();
 
-    useEffect(() => {
+    useEffect((id) => {
         setIsPending(true);
-        const unsub = projectFirestore.collection('recipes').doc(id).onSnapshot((doc) => {
-            if (doc.exists) {
+        const ref = collection(db, 'recipes');
+
+        const unsub = onSnapshot(ref, (snapshot) => {
+            let results = [];
+            snapshot.docs.forEach((doc) => {
+                results.push({ id: doc.id, ...doc.data() })
+            })
+            if (snapshot.exists) {
                 setIsPending(false);
-                setRecipe(doc.data());
+                setRecipe(snapshot.data());
             } else {
                 setIsPending(false);
                 setError("Could not find that recipe")
             }
         })
+        return () => unsub();
 
-        return () => unsub()
+    }, [id]);
 
-    }, [id])
 
     const handleClick = () => {
-        projectFirestore.collection('recipes').doc(id).update({
+        db.collection('recipes').doc(id).update({
             title: 'something different'
         })
     }

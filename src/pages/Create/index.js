@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { VscTrash } from "react-icons/vsc";
+import { db } from '../../firebase/config'
+import { collection, addDoc } from 'firebase/firestore'
 
 //styles
 import './styles.scss';
-import { projectFirestore } from '../../firebase/config';
-
 
 
 export default function Create() {
@@ -21,14 +20,17 @@ export default function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const doc = { title, ingredients, method, cookingTime: cookingTime + ' minutes' };
 
-        try {
-            await projectFirestore.collection('recipes').add(doc);
-            navigate('/')
-        } catch (err) {
-            console.log(err)
-        }
+
+        const ref = collection(db, 'recipes')
+
+        await addDoc(ref, { title, ingredients, method, cookingTime: cookingTime + ' minutes' })
+        // try {
+        //     await db.collection('recipes').add(doc);
+        //     navigate('/')
+        // } catch (err) {
+        //     console.log(err)
+        // }
     }
 
     const handleAddIngredient = (e) => {

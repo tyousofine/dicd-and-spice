@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useColor } from './../../hooks/useColor';
 import { VscTrash } from "react-icons/vsc";
-import { projectFirestore } from '../../firebase/config';
+import { db } from '../../firebase/config';
 
 // styles
 import './styles.scss';
@@ -13,7 +13,7 @@ export default function RecipeList({ recipes }) {
     const { mode } = useColor();
 
     const handleClick = (id) => {
-        projectFirestore.collection('recipes').doc(id).delete()
+        db.collection('recipes').doc(id).delete()
     }
 
     return (
